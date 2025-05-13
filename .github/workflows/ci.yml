@@ -11,6 +11,7 @@ on:
 env:
   NODE_VERSION: '20'
   BUILD_DIR: build
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 jobs:
   # >> CI <<
@@ -42,9 +43,9 @@ jobs:
           npm run lint
 
       - name: Static Analysis (SonarQube)
-        if: ${{ secrets.SONAR_TOKEN != '' }}
+        if: env.SONAR_TOKEN != ''
         uses: sonarsource/sonarcloud-github-action@v1.10.0
         with:
           projectKey: desafio-devops_desafio-devops
           organization: desafio-devops
-          token: ${{ secrets.SONAR_TOKEN }}
+          token: env.SONAR_TOKEN
