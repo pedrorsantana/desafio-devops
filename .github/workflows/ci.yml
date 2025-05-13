@@ -44,10 +44,6 @@ jobs:
           npm ci
           npm run lint
           npm run test -- --watch=false --code-coverage
-      
-      - name: list directory
-        run: |
-          ls ${{ github.workspace }}/coverage/desafio-devops/
 
       - name: Upload coverage report
         if: matrix.node == env.NODE_VERSION && matrix.os == env.OS
@@ -113,3 +109,48 @@ jobs:
           path: ${{ github.workspace }}/dist/
 
   # >> Continous Delivery (CD) <<
+  create-release:
+    name: Create GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: app-build-node${{ env.NODE_VERSION }}
+          path: release-content/
+
+
+      - name: Set up Git for tagging
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Determine next version
+        id: version
+        run: |
+          TAG=$(git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n1 || echo v0.0.0)
+          VERSION=$(echo "$TAG" | sed -E 's/^v//' | awk -F. -v OFS=. '{$3+=1; print}')
+          NEXT="v$VERSION"
+          echo "current=$TAG" >> $GITHUB_OUTPUT
+          echo "next=$NEXT" >> $GITHUB_OUTPUT
+
+      - name: Create and push Git tag
+        run: |
+          git tag ${{ steps.version.outputs.next }}
+          git push origin ${{ steps.version.outputs.next }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.next }}
+          name: Release ${{ steps.version.outputs.next }}
+          files: |
+            $(find release-content -type f -size +0c)
