@@ -168,12 +168,17 @@ jobs:
     needs: create-release
     runs-on: ubuntu-latest
     environment:
-      name: github-pages
-    permissions:
-      contents: write 
-      id-token: write
-      pages: write
+      name: main
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: release-content/
+
+      - uses: shallwefootball/s3-upload-action@master
+        with:
+          aws_key_id: ${{ secrets.AWS_KEY }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_KEY}}
+          aws_bucket: ${{ secrets.AWS_BUCKET }}
+          source_dir: 'release-content/'
