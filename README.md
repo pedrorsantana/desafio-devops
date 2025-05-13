@@ -1,55 +1,83 @@
-# Desafio-Devops
+# 🚀 Desafio DevOps
 
+**Tarefa:**  
+Crie um pipeline de CI/CD usando o **GitHub Actions** para um projeto simples de aplicação web.
 
-Tarefa: Crie um pipeline de CI/CD usando o GitHub Actions para um projeto simples de
-aplicação web.
+---
 
-### Requisitos:
+## 📋 Requisitos
 
-1. O pipeline deve ser ativado sempre que um novo commit for feito na branch main.
+### 🔁 Gatilho
+
+1. O pipeline deve ser ativado sempre que um novo commit for feito na branch `main`.
+
+### 🧪 Etapas do Pipeline
+
 2. O pipeline deve executar os seguintes passos:
-- Instalar as dependências do projeto.
-- Executar testes unitários.
-- o Construir a aplicação.
-- o Armazenar o artefato como release do github
-- o Usar funcionalidade environment do github para restringir a aprovação do
-deploy para um usuário ou grupo do github
-3. Se todos os passos acima forem bem-sucedidos, o pipeline deve fazer o deploy da
-aplicação em um ambiente de teste.
-4. O pipeline deve notificar o desenvolvedor via e-mail se o processo de CI/CD falhar em
-qualquer etapa.
 
-### Plus(Não obrigatório porem será um diferencial):
-1. Criar um desenho simples de arquitetura na ferramenta draw.io (diagrams.net) que
-mostre como sera estruturado o pipeline.
-o Critérios:
-- No desenho deve estar descritos claramente a separação dos steps de
-CI e de CD
-- Caso haja alguma interação manual isso deve estar declarado no
-Desenho
+   - ✅ Instalar as dependências do projeto  
+   - 🧪 Executar testes unitários  
+   - 🛠️ Construir a aplicação  
+   - 📦 Armazenar o artefato como *release* do GitHub  
+   - 🔐 Usar a funcionalidade **Environment** do GitHub para restringir a aprovação do deploy a um usuário ou grupo específico  
 
-2. Criar uma action do tipo TypeScript que faça execução de algum linter ou quality
-gates
-- Exemplos:
-- Validar se existe um arquivo no repositório necessário para o build,
-caso negativo abortar a esteira indicando que e necessário esse
-arquivo
-- Executar uma análise estática usando a ferramenta SonarQube ou
-alguma outra similiar
-- Etc...
+3. Se todos os passos acima forem bem-sucedidos, o pipeline deve:
 
-## Critérios de Avaliação:
-1. Correção: O pipeline deve funcionar conforme especificado nos requisitos.
-2. Compreensão: O candidato deve ser capaz de explicar como o pipeline funciona e por
-que ele configurou as coisas da maneira que fez. (Será avaliado na entrevista)
-3. Eficiência: O pipeline deve ser configurado de maneira eficiente, sem etapas
-desnecessárias.
-4. Boas práticas: O pipeline deve seguir as boas práticas do GitHub Actions, como o uso
-de segredos para armazenar informações sensíveis.
-5. O Repositório do github com a implementação do pipeline deve ser enviado aos
-entrevistadores no prazo indicado.
+   - 🚀 Fazer o **deploy** da aplicação em um **ambiente de teste**
 
-## Diagrama
+4. Em caso de falha em qualquer etapa:
 
-![Diagrama](public/Diagrama-Fluxo-DevOps.png)
+   - 📧 Notificar o desenvolvedor via **e-mail**
 
+---
+
+## 🌟 Plus (Não obrigatório, mas diferencial)
+
+### 📐 Diagrama de Arquitetura
+
+1. Criar um **desenho simples de arquitetura** na ferramenta [**draw.io**](https://draw.io) (*diagrams.net*) que mostre como será estruturado o pipeline.
+
+   #### Critérios para o Diagrama:
+   - Deve conter a **separação clara dos steps de CI e CD**
+   - Qualquer **interação manual** deve estar explicitada
+
+### 🛠️ GitHub Action Personalizada (TypeScript)
+
+2. Criar uma action do tipo **TypeScript** que realize execução de algum **linter ou quality gate**.
+
+   #### Exemplos:
+   - 📄 Verificar a existência de arquivos necessários para o build  
+   - 🔍 Executar análise estática com **SonarQube** ou ferramenta similar  
+   - 🛑 Abortar a esteira se pré-requisitos não forem atendidos  
+
+---
+
+## 🧠 Critérios de Avaliação
+
+1. **Correção**  
+   O pipeline deve funcionar conforme os requisitos.
+
+2. **Compreensão**  
+   O candidato deve ser capaz de explicar o funcionamento e suas escolhas (avaliado em entrevista).
+
+3. **Eficiência**  
+   O pipeline deve evitar etapas desnecessárias.
+
+4. **Boas Práticas**  
+   - Uso adequado de **segredos** (`secrets`) para dados sensíveis  
+   - Estrutura clara e reutilizável
+
+5. **Entrega**  
+   O **repositório do GitHub** com o pipeline implementado deve ser entregue dentro do prazo estipulado.
+
+---
+
+## 🌐 Endereço do Servidor
+
+[http://desafio-devops-1.s3-website-us-east-1.amazonaws.com](http://desafio-devops-1.s3-website-us-east-1.amazonaws.com)
+
+---
+
+## 🗺️ Diagrama
+
+![Diagrama do Pipeline DevOps](public/Diagrama-Fluxo-DevOps.png)
