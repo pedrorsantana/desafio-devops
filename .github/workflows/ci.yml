@@ -161,6 +161,8 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: main
+    permissions:
+      contents: write 
     steps:
       - name: Download release
         uses: actions/download-artifact@v4
