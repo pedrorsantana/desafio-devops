@@ -15,8 +15,8 @@ env:
 
 jobs:
   # >> CI <<
-  lint-and-validate:
-    name: Lint and Quality Gates
+  lint-test-and-validate:
+    name: Lint, Test and Quality Gates
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -53,3 +53,33 @@ jobs:
             -Dsonar.tests=src
             -Dsonar.test.inclusions=**/*.spec.ts
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+
+  build:
+    name: Build
+    needs: lint-test-and-validate
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [16, 20]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build app
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-${{ matrix.os }}-node${{ matrix.node }}
+          path: ${{ env.BUILD_DIR }}
