@@ -14,7 +14,7 @@ env:
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 jobs:
-  # >> CI <<
+  # >> Continous Integration (CI) <<
   lint-test-and-validate:
     name: Lint, Test and Quality Gates
     runs-on: ubuntu-latest
@@ -61,7 +61,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node: [16, 20]
+        node: [18, 20]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -83,3 +83,5 @@ jobs:
         with:
           name: app-${{ matrix.os }}-node${{ matrix.node }}
           path: ${{ env.BUILD_DIR }}
+
+  # >> Continous Delivery (CD) <<
