@@ -154,3 +154,22 @@ jobs:
           name: Release ${{ steps.version.outputs.next }}
           files: |
             $(find release-content -type f -size +0c)
+
+  deploy:
+    name: Deploy
+    needs: create-release
+    runs-on: ubuntu-latest
+    environment:
+      name: main
+    steps:
+      - name: Download release
+        uses: actions/download-artifact@v4
+        with:
+          name: app-build-node${{ env.NODE_VERSION }}
+          path: deploy-package/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./deploy-package/ 
