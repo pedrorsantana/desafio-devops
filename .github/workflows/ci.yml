@@ -1,0 +1,50 @@
+name: CI/CD_Pipeline
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+  pull_request:
+
+env:
+  NODE_VERSION: '20'
+  BUILD_DIR: build
+
+jobs:
+  # >> CI <<
+  lint-and-validate:
+    name: Lint and Quality Gates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Check README.md
+        uses: ./github/actions/check-readme-action
+
+      - name: Install & Lint
+        run: |
+          npm ci
+          npm run lint
+
+      - name: Static Analysis (SonarQube)
+        if: ${{ secrets.SONAR_TOKEN != '' }}
+        uses: sonarsource/sonarcloud-github-action@v1.10.0
+        with:
+          projectKey: desafio-devops_desafio-devops
+          organization: desafio-devops
+          token: ${{ secrets.SONAR_TOKEN }}
