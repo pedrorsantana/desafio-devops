@@ -1,59 +1,83 @@
-# DesafioDevops
+# 🚀 Desafio DevOps
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.2.
+**Tarefa:**  
+Crie um pipeline de CI/CD usando o **GitHub Actions** para um projeto simples de aplicação web.
 
-## Development server
+---
 
-To start a local development server, run:
+## 📋 Requisitos
 
-```bash
-ng serve
-```
+### 🔁 Gatilho
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+1. O pipeline deve ser ativado sempre que um novo commit for feito na branch `main`.
 
-## Code scaffolding
+### 🧪 Etapas do Pipeline
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+2. O pipeline deve executar os seguintes passos:
 
-```bash
-ng generate component component-name
-```
+   - ✅ Instalar as dependências do projeto  
+   - 🧪 Executar testes unitários  
+   - 🛠️ Construir a aplicação  
+   - 📦 Armazenar o artefato como *release* do GitHub  
+   - 🔐 Usar a funcionalidade **Environment** do GitHub para restringir a aprovação do deploy a um usuário ou grupo específico  
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+3. Se todos os passos acima forem bem-sucedidos, o pipeline deve:
 
-```bash
-ng generate --help
-```
+   - 🚀 Fazer o **deploy** da aplicação em um **ambiente de teste**
 
-## Building
+4. Em caso de falha em qualquer etapa:
 
-To build the project run:
+   - 📧 Notificar o desenvolvedor via **e-mail**
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🌟 Plus (Não obrigatório, mas diferencial)
 
-## Running unit tests
+### 📐 Diagrama de Arquitetura
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+1. Criar um **desenho simples de arquitetura** na ferramenta [**draw.io**](https://draw.io) (*diagrams.net*) que mostre como será estruturado o pipeline.
 
-```bash
-ng test
-```
+   #### Critérios para o Diagrama:
+   - Deve conter a **separação clara dos steps de CI e CD**
+   - Qualquer **interação manual** deve estar explicitada
 
-## Running end-to-end tests
+### 🛠️ GitHub Action Personalizada (TypeScript)
 
-For end-to-end (e2e) testing, run:
+2. Criar uma action do tipo **TypeScript** que realize execução de algum **linter ou quality gate**.
 
-```bash
-ng e2e
-```
+   #### Exemplos:
+   - 📄 Verificar a existência de arquivos necessários para o build  
+   - 🔍 Executar análise estática com **SonarQube** ou ferramenta similar  
+   - 🛑 Abortar a esteira se pré-requisitos não forem atendidos  
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 🧠 Critérios de Avaliação
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1. **Correção**  
+   O pipeline deve funcionar conforme os requisitos.
+
+2. **Compreensão**  
+   O candidato deve ser capaz de explicar o funcionamento e suas escolhas (avaliado em entrevista).
+
+3. **Eficiência**  
+   O pipeline deve evitar etapas desnecessárias.
+
+4. **Boas Práticas**  
+   - Uso adequado de **segredos** (`secrets`) para dados sensíveis  
+   - Estrutura clara e reutilizável
+
+5. **Entrega**  
+   O **repositório do GitHub** com o pipeline implementado deve ser entregue dentro do prazo estipulado.
+
+---
+
+## 🌐 Endereço do Servidor
+
+[http://desafio-devops-1.s3-website-us-east-1.amazonaws.com](http://desafio-devops-1.s3-website-us-east-1.amazonaws.com)
+
+---
+
+## 🗺️ Diagrama
+
+![Diagrama do Pipeline DevOps](public/Diagrama-Fluxo-DevOps.png)
