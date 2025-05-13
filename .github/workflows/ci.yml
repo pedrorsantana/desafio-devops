@@ -44,7 +44,7 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v5.2.0
         with:
           args: >
-            -Dsonar.projectKey=${{ github.repository }}
-            -Dsonar.organization=${{ github.repository }}
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORG }}
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
             -Dsonar.host.url=https://sonarcloud.io
