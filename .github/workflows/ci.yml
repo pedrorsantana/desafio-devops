@@ -106,7 +106,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: ${{ github.workspace }}/dist/browser/
+          path: ${{ github.workspace }}/dist/desafio-devops/browser
 
   # >> Continous Delivery (CD) <<
   create-release:
