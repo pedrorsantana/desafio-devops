@@ -6,8 +6,12 @@ concurrency:
 
 on: 
   push:
+    branches:
+      - main
   pull_request:
-
+    branches:
+      - main
+    
 env:
   OS: 'ubuntu-latest'
   NODE_VERSION: '20'
@@ -32,6 +36,9 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: 'npm'
+
+      - name: Verificar README.md obrigatório
+        uses: ./.github/actions/check-readme-action
 
       - name: Cache node modules
         uses: actions/cache@v3
@@ -84,8 +91,6 @@ jobs:
     name: Build
     needs: quality-gate
     runs-on: ubuntu-latest
-    #TODO: Uncomment to run on build or release only
-    #if: startsWith(github.ref, 'refs/heads/release') || github.ref == 'refs/heads/main'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -102,11 +107,16 @@ jobs:
       - name: Build app
         run: npm run build
 
+      - name: Remove .lock files
+        run: |
+          find ${{ github.workspace }}/dist/desafio-devops/browser -name ".lock" -type f -delete
+          chmod -R 775 ${{ github.workspace }}/dist/desafio-devops/browser
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-build-node${{ env.NODE_VERSION }}
-          path: ${{ github.workspace }}/dist/
+          name: github-pages
+          path: ${{ github.workspace }}/dist/desafio-devops/browser
 
   # >> Continous Delivery (CD) <<
   create-release:
@@ -124,7 +134,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: app-build-node${{ env.NODE_VERSION }}
+          name: github-pages
           path: release-content/
 
 
@@ -154,3 +164,49 @@ jobs:
           name: Release ${{ steps.version.outputs.next }}
           files: |
             $(find release-content -type f -size +0c)
+
+  deploy:
+    name: Deploy
+    needs: create-release
+    runs-on: ubuntu-latest
+    environment:
+      name: main
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: release-content/
+
+      - name: Sync to S3
+        uses: jakejarvis/s3-sync-action@v0.5.1
+        with:
+          args: --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+          AWS_REGION: us-east-1
+          SOURCE_DIR: release-content/
+
+  notify-failure:
+    name: Notify on failure
+    if: failure()
+    runs-on: ubuntu-latest
+    environment:
+      name: main
+    steps:
+      - name: Send failure email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_HOST }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.AWS_ACCESS_KEY }}
+          password: ${{ secrets.AWS_SECRET_KEY }}
+          to: secrets.SMTP_RECEIVER_RELAY
+          from: CI Pipeline <ci@desafiodevops.com>
+          subject: 'A pipeline falhou, por favor verificar os logs.'
+          body: |
+            O pipeline em `${{ github.workflow }}` falhou no job `${{ github.job }}`.
+            Commit: `${{ github.sha }}`
+            Ver detalhes: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

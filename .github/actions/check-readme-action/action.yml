@@ -1,0 +1,5 @@
+name: 'Check README exists'
+description: 'Abortar se README.md não existir'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
