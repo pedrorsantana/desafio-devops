@@ -191,7 +191,7 @@ jobs:
 
   notify-failure:
     name: Notify on failure
-    if: failure()
+    if: ${{ failure() }}
     runs-on: ubuntu-latest
     environment:
       name: main
