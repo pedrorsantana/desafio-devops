@@ -121,7 +121,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: app-*-*
+          name: app-build-node${{ env.NODE_VERSION }}
           path: release-content/
 
       - name: Determine next version
