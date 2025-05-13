@@ -44,8 +44,7 @@ jobs:
 
       - name: Static Analysis (SonarQube)
         if: env.SONAR_TOKEN != ''
-        uses: sonarsource/sonarcloud-github-action@v1.10.0
+        uses: SonarSource/sonarqube-scan-action@v5.2.0
         with:
-          projectKey: desafio-devops_desafio-devops
-          organization: desafio-devops
-          token: env.SONAR_TOKEN
+          sonar_token: ${{ secrets.SONAR_TOKEN }}
+          sonar_host_url: https://sonarcloud.io
