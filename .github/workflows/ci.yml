@@ -122,6 +122,12 @@ jobs:
           name: app-build-node${{ env.NODE_VERSION }}
           path: release-content/
 
+
+      - name: Set up Git for tagging
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
       - name: Determine next version
         id: version
         run: |
@@ -130,6 +136,11 @@ jobs:
           # incrementa patch
           NEXT=$(echo "$TAG" | awk -F. -v OFS=. '{$3+=1; print}')
           echo "next=$NEXT" >> $GITHUB_OUTPUT
+
+      - name: Create and push Git tag
+        run: |
+          git tag ${{ steps.version.outputs.next }}
+          git push origin ${{ steps.version.outputs.next }}
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
