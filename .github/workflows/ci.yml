@@ -169,10 +169,7 @@ jobs:
         with:
           name: app-build-node${{ env.NODE_VERSION }}
           path: deploy-package/
-
-      - name: SSH_DEPLOY
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.DEPLOYMENT_SERVER_SSH_PRIVATEKEY }}
-          SERVER_IP: ${{ secrets.DEPLOYMENT_SERVER_IP }}
-        run: |
-          ./scripts/deploy.sh test deploy-package/
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
