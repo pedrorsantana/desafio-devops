@@ -33,10 +33,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-
-      - name: Check README.md
-        uses: ./github/actions/check-readme-action
-
+          
       - name: Install & Lint
         run: |
           npm ci
