@@ -163,6 +163,8 @@ jobs:
       name: main
     permissions:
       contents: write 
+      id-token: write
+      pages: write
     steps:
       - name: Download release
         uses: actions/download-artifact@v4
