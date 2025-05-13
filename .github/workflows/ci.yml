@@ -169,7 +169,7 @@ jobs:
       - name: Download release
         uses: actions/download-artifact@v4
         with:
-          name: app-build-node${{ env.NODE_VERSION }}
+          name: github-pages
           path: deploy-package/
       
       - name: Deploy to GitHub Pages
