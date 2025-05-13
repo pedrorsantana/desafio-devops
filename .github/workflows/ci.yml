@@ -163,20 +163,14 @@ jobs:
     needs: create-release
     runs-on: ubuntu-latest
     environment:
-      name: main
+      name: github-pages
     permissions:
       contents: write 
       id-token: write
       pages: write
     steps:
-      - name: Download release
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-          path: deploy-package/
-      
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
         with:
           artifact_name: github-pages
