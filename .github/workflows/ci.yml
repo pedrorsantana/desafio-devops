@@ -34,10 +34,11 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
-      - name: Install & Lint
+      - name: Install & Lint & Test
         run: |
           npm ci
           npm run lint
+          ng test --watch=false --code-coverage
 
       - name: Static Analysis (SonarQube)
         if: env.SONAR_TOKEN != ''
