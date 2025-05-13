@@ -105,7 +105,7 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-build-node${{ env.NODE_VERSION }}
+          name: github-pages
           path: ${{ github.workspace }}/dist/
 
   # >> Continous Delivery (CD) <<
@@ -124,7 +124,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: app-build-node${{ env.NODE_VERSION }}
+          name: github-pages
           path: release-content/
 
 
