@@ -1,5 +1,19 @@
 # 🚀 Desafio DevOps
 
+---
+
+## 🌐 Endereço do Servidor
+
+[http://desafio-devops-1.s3-website-us-east-1.amazonaws.com](http://desafio-devops-1.s3-website-us-east-1.amazonaws.com)
+
+---
+
+## 🗺️ Diagrama
+
+![Diagrama do Pipeline DevOps](public/Diagrama-Fluxo-DevOps.png)
+
+---
+
 **Tarefa:**  
 Crie um pipeline de CI/CD usando o **GitHub Actions** para um projeto simples de aplicação web.
 
@@ -71,13 +85,3 @@ Crie um pipeline de CI/CD usando o **GitHub Actions** para um projeto simples de
    O **repositório do GitHub** com o pipeline implementado deve ser entregue dentro do prazo estipulado.
 
 ---
-
-## 🌐 Endereço do Servidor
-
-[http://desafio-devops-1.s3-website-us-east-1.amazonaws.com](http://desafio-devops-1.s3-website-us-east-1.amazonaws.com)
-
----
-
-## 🗺️ Diagrama
-
-![Diagrama do Pipeline DevOps](public/Diagrama-Fluxo-DevOps.png)
