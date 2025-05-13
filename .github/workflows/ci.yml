@@ -50,7 +50,7 @@ jobs:
         run: |
           npm ci
           npm run lint
-          npm run test -- --watch=false --code-coverage
+          npm run aaaatest -- --watch=false --code-coverage
 
       - name: Upload coverage report
         if: matrix.node == env.NODE_VERSION && matrix.os == env.OS
