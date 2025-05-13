@@ -105,6 +105,9 @@ jobs:
       - name: Build app
         run: npm run build
 
+      - name: Remove .lock files
+        run: find ${{ github.workspace }}/dist/desafio-devops/browser -name ".lock" -type f -delete
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
@@ -172,5 +175,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          artifact_name: github-pages
