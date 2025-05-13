@@ -194,18 +194,16 @@ jobs:
     needs: [deploy, build, quality-gate, lint-and-test]
     if: ${{ failure() }}
     runs-on: ubuntu-latest
-    environment:
-      name: main
     steps:
       - name: Send failure email
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_HOST }}
           server_port: ${{ secrets.SMTP_PORT }}
-          username: ${{ secrets.AWS_ACCESS_KEY }}
-          password: ${{ secrets.AWS_SECRET_KEY }}
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASSWORD }}
           to: ${{ secrets.SMTP_RECEIVER_RELAY }}
-          from: CI Pipeline <ci@desafiodevops.com>
+          from: ${{ secrets.SMTP_USER }}
           subject: 'A pipeline falhou, por favor verificar os logs.'
           body: |
             O pipeline em `${{ github.workflow }}` falhou no job `${{ github.job }}`.
