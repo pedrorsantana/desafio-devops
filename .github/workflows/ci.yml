@@ -170,7 +170,7 @@ jobs:
           name: app-build-node${{ env.NODE_VERSION }}
           path: deploy-package/
 
-     - name: Deploy
+      - name: SSH_DEPLOY
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOYMENT_SERVER_SSH_PRIVATEKEY }}
           SERVER_IP: ${{ secrets.DEPLOYMENT_SERVER_IP }}
