@@ -107,8 +107,8 @@ jobs:
 
       - name: Remove .lock files
         run: |
-        find ${{ github.workspace }}/dist/desafio-devops/browser -name ".lock" -type f -delete
-        chmod -R 775 ${{ github.workspace }}/dist/desafio-devops/browser
+          find ${{ github.workspace }}/dist/desafio-devops/browser -name ".lock" -type f -delete
+          chmod -R 775 ${{ github.workspace }}/dist/desafio-devops/browser
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
