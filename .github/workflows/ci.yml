@@ -57,7 +57,7 @@ jobs:
           path: ${{ github.workspace }}/coverage/desafio-devops/lcov.info
 
   quality-gate:
-    name: Lint and Test
+    name: Quality Gate
     needs: lint-and-test
     runs-on: ubuntu-latest
     steps:
@@ -110,6 +110,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-build-node${{ env.NODE_VERSION }}
-          path: ${{ env.BUILD_DIR }}/dist/
+          path: ${{ github.workspace }}/dist/
 
   # >> Continous Delivery (CD) <<
