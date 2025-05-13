@@ -135,9 +135,16 @@ jobs:
         id: version
         run: |
           TAG=$(git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n1 || echo v0.0.0)
-          echo "current=$TAG" >> "$GITHUB_OUTPUT"
-          NEXT=$(echo "$TAG" | awk -F. -v OFS=. '{$3+=1; print}')
-          echo "next=$NEXT" >> "$GITHUB_OUTPUT"
+          echo "TAG encontrado: $TAG"
+          
+          # Incrementa patch
+          VERSION=$(echo "$TAG" | sed -E 's/^v//' | awk -F. -v OFS=. '{$3+=1; print}')
+          NEXT="v$VERSION"
+          echo "Nova versão: $NEXT"
+          
+          # Exporta outputs corretamente
+          echo "current=$TAG" >> $GITHUB_OUTPUT
+          echo "next=$NEXT" >> $GITHUB_OUTPUT
 
       - name: Debug tag
         run: |
@@ -155,4 +162,5 @@ jobs:
         with:
           tag_name: ${{ steps.version.outputs.next }}
           name: Release ${{ steps.version.outputs.next }}
-          files: release-content/**
+          files: |
+            $(find release-content -type f -size +0c)
