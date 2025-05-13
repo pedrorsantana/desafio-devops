@@ -4,7 +4,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-on:
+on: 
   push:
   pull_request:
 
@@ -33,7 +33,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          
+
       - name: Install & Lint
         run: |
           npm ci
@@ -43,5 +43,8 @@ jobs:
         if: env.SONAR_TOKEN != ''
         uses: SonarSource/sonarqube-scan-action@v5.2.0
         with:
-          sonar_token: ${{ secrets.SONAR_TOKEN }}
-          sonar_host_url: https://sonarcloud.io
+          args: >
+            -Dsonar.projectKey=${{ github.repository }}
+            -Dsonar.organization=${{ github.repository }}
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.host.url=https://sonarcloud.io
