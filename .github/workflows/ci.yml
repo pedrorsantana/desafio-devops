@@ -191,6 +191,7 @@ jobs:
 
   notify-failure:
     name: Notify on failure
+    needs: [deploy, build, quality-gate, lint-and-test]
     if: ${{ failure() }}
     runs-on: ubuntu-latest
     environment:
