@@ -203,7 +203,7 @@ jobs:
           username: ${{ secrets.SMTP_USER }}
           password: ${{ secrets.SMTP_PASSWORD }}
           to: ${{ secrets.SMTP_RECEIVER_RELAY }}
-          from: ${{ secrets.SMTP_USER }}
+          from: desafiodevops <${{ secrets.SMTP_USER }}>
           subject: 'A pipeline falhou, por favor verificar os logs.'
           body: |
             O pipeline em `${{ github.workflow }}` falhou no job `${{ github.job }}`.
